@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../reset.css";
+import "../App.css";
 
 export class AppClass extends Component {
   constructor(props) {
@@ -25,12 +26,28 @@ export class AppClass extends Component {
     };
   }
 
+  addTodo = (event) => {
+    event.preventDefault();
+    this.setState((prevState) => {
+      const newTodos = [
+        ...prevState.todos,
+        {
+          id: 4,
+          title: "this is class based components",
+          isComplete: false,
+        },
+      ];
+
+      return { todos: newTodos };
+    });
+  };
+
   render() {
     return (
       <div className="todo-app-container">
         <div className="todo-app">
           <h2>Todo App</h2>
-          <form action="#">
+          <form action="#" onSubmit={this.addTodo}>
             <input
               type="text"
               className="todo-input"
@@ -40,7 +57,7 @@ export class AppClass extends Component {
 
           <ul className="todo-list">
             {this.state.todos.map((todo, index) => (
-              <li className="todo-item-container">
+              <li key={todo.id} className="todo-item-container">
                 <div className="todo-item">
                   <input type="checkbox" />
                   <span className="todo-item-label">{todo.title}</span>
