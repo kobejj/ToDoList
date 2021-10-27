@@ -1,10 +1,11 @@
-import React, { useMemo, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NoTodos from "./NoTodos";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import useLocalStorage from "../hooks/useLocalStorage";
 import "../reset.css";
 import "../App.css";
+import { TodosContext } from "../context/TodosContext";
 
 function App() {
   //const [name, setName] = useState("");
@@ -36,103 +37,9 @@ function App() {
   //const [todoInput, setTodoInput] = useState("");
   //const [idForTodo, setidForTodo] = useState(4);
   const [idForTodo, setIdForTodo] = useLocalStorage("idForTodo", 1);
+  const [filter, setFilter] = useState("all");
 
-  function addTodo(todo) {
-    setTodos([
-      ...todos,
-      {
-        id: idForTodo,
-        title: todo,
-        isComplete: false,
-      },
-    ]);
-
-    //setidForTodo(idForTodo + 1);
-    setIdForTodo((prevIdForTodo) => prevIdForTodo + 1);
-  }
-
-  function deleteTodo(id) {
-    //console.log("deleting todo id " + id);
-    setTodos([...todos].filter((todo) => todo.id !== id));
-  }
-
-  function completeTodo(id) {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete;
-      }
-
-      return todo;
-    });
-
-    setTodos(updatedTodos);
-  }
-
-  function markAsEditing(id) {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.isEditing = true;
-      }
-
-      return todo;
-    });
-
-    setTodos(updatedTodos);
-  }
-
-  function updateTodo(event, id) {
-    console.log(event.target.value);
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        if (event.target.value.trim().length === 0) {
-          todo.isEditing = false;
-          return todo;
-        }
-        todo.title = event.target.value;
-        todo.isEditing = false;
-      }
-
-      return todo;
-    });
-
-    setTodos(updatedTodos);
-  }
-
-  function cancelEdit(event, id) {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.isEditing = false;
-      }
-
-      return todo;
-    });
-
-    setTodos(updatedTodos);
-  }
-
-  function remainingCalculation() {
-    // console.log("calculating remaining todos. this is slow");
-
-    // for (let index = 0; index < 2000000000; index++) {}
-    return todos.filter((todo) => !todo.isComplete).length;
-  }
-  const remaining = useMemo(remainingCalculation, [todos]);
-
-  function clearCompleted() {
-    setTodos([...todos].filter((todo) => !todo.isComplete));
-  }
-
-  function completeAllTodos() {
-    const updatedTodos = todos.map((todo) => {
-      todo.isComplete = true;
-
-      return todo;
-    });
-
-    setTodos(updatedTodos);
-  }
-
-  function todosFiltered(filter) {
+  function todosFiltered() {
     if (filter === "all") {
       return todos;
     } else if (filter === "active") {
@@ -159,44 +66,41 @@ function App() {
   }
 
   return (
-    <div className="todo-app-container">
-      <div className="todo-app">
-        <div className="name-container">
-          <h2>What is your name?</h2>
-          <button>Get Ref</button>
-          <form action="#">
-            <input
-              type="text"
-              ref={nameInputEl}
-              className="todo-input"
-              placeholder="What is your name"
-              value={name}
-              onChange={handleNameInput}
-            />
-          </form>
-          {name && <p className="name-label">Hello, {name}</p>}
-        </div>
-        <h2>Todo App</h2>
-        <TodoForm addTodo={addTodo} />
+    <TodosContext.Provider
+      value={{
+        todos,
+        setTodos,
+        idForTodo,
+        setIdForTodo,
+        todosFiltered,
+        filter,
+        setFilter,
+      }}
+    >
+      <div className="todo-app-container">
+        <div className="todo-app">
+          <div className="name-container">
+            <h2>What is your name?</h2>
+            <button>Get Ref</button>
+            <form action="#">
+              <input
+                type="text"
+                ref={nameInputEl}
+                className="todo-input"
+                placeholder="What is your name"
+                value={name}
+                onChange={handleNameInput}
+              />
+            </form>
+            {name && <p className="name-label">Hello, {name}</p>}
+          </div>
+          <h2>Todo App</h2>
+          <TodoForm />
 
-        {todos.length > 0 ? (
-          <TodoList
-            todos={todos}
-            completeTodo={completeTodo}
-            markAsEditing={markAsEditing}
-            updateTodo={updateTodo}
-            cancelEdit={cancelEdit}
-            deleteTodo={deleteTodo}
-            remaining={remaining}
-            clearCompleted={clearCompleted}
-            completeAllTodos={completeAllTodos}
-            todosFiltered={todosFiltered}
-          />
-        ) : (
-          <NoTodos />
-        )}
+          {todos.length > 0 ? <TodoList /> : <NoTodos />}
+        </div>
       </div>
-    </div>
+    </TodosContext.Provider>
   );
 }
 

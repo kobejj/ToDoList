@@ -1,12 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useMemo, useContext } from "react";
+import { TodosContext } from "../context/TodosContext";
 
-TodoItemsRemaining.prototype = {
-  remaining: PropTypes.number.isRrequired,
-};
+function TodoItemsRemaining() {
+  const { todos } = useContext(TodosContext);
+  function remainingCalculation() {
+    // console.log("calculating remaining todos. this is slow");
 
-function TodoItemsRemaining(props) {
-  return <div>{props.remaining} items remaining</div>;
+    // for (let index = 0; index < 2000000000; index++) {}
+    return todos.filter((todo) => !todo.isComplete).length;
+  }
+  const remaining = useMemo(remainingCalculation, [todos]);
+  return <div>{remaining} items remaining</div>;
 }
 
 export default TodoItemsRemaining;
