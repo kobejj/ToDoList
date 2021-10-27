@@ -12,7 +12,7 @@ TodoList.prototype = {
   updateTodo: PropTypes.func.isRequired,
   cancelEdit: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
-  remaining: PropTypes.func.isRrequired,
+  remaining: PropTypes.number.isRrequired,
   clearCompleted: PropTypes.func.isRrequired,
   completeAllTodos: PropTypes.func.isRrequired,
 };
