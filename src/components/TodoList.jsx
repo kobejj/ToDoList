@@ -43,7 +43,7 @@ function TodoList() {
   }
 
   function updateTodo(event, id) {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
         if (event.target.value.trim().length === 0) {

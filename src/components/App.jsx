@@ -14,26 +14,6 @@ function App() {
 
   const nameInputEl = useRef(null);
   const [todos, setTodos] = useLocalStorage("todos", []);
-  //   const [todos, setTodos] = useState([
-  //     {
-  //       id: 1,
-  //       title: "Finish React Series",
-  //       isComplete: false,
-  //       isEditing: false,
-  //     },
-  //     {
-  //       id: 2,
-  //       title: "Go Grocery",
-  //       isComplete: true,
-  //       isEditing: false,
-  //     },
-  //     {
-  //       id: 3,
-  //       title: "Take over world",
-  //       isComplete: false,
-  //       isEditing: false,
-  //     },
-  //   ]);
 
   //const [todoInput, setTodoInput] = useState("");
   //const [idForTodo, setidForTodo] = useState(4);
@@ -81,7 +61,7 @@ function App() {
       <div className="todo-app">
         <div className="name-container">
           <h2>What is your name?</h2>
-          <button>Get Ref</button>
+          <button onClick={() => console.log(nameInputEl)}>Get Ref</button>
           <form action="#">
             <input
               type="text"

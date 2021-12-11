@@ -3,6 +3,7 @@ import { TodosContext } from "../context/TodosContext";
 
 function TodoCompleteAllTodos() {
   const { todos, setTodos } = useContext(TodosContext);
+
   function completeAllTodos() {
     const updatedTodos = todos.map((todo) => {
       todo.isComplete = true;

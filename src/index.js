@@ -6,12 +6,18 @@ import Root from "./components/Root";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Root />
-    {/* <AppClass /> */}
-  </React.StrictMode>,
+  <Root />,
+
   document.getElementById("root")
 );
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Root />
+//     {/* <AppClass /> */}
+//   </React.StrictMode>,
+//   document.getElementById("root")
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
