@@ -10,7 +10,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 function TodoList() {
   const [isFeaturesOneVisible, setIsFeaturesOneVisible] = useToggle();
-  const [isFeaturesTwoVisible, setIsFeaturesTwoVisible] = useToggle();
+  const [isFeaturesTwoVisible, setIsFeaturesTwoVisible] = useToggle(false);
   const { todos, setTodos, todosFiltered } = useContext(TodosContext);
 
   function deleteTodo(id) {

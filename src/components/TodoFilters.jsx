@@ -10,7 +10,9 @@ function TodoFilters() {
           setFilter("all");
           todosFiltered();
         }}
-        className={`button filter-button `}
+        className={`button filter-button ${
+          filter === "all" ? "filter-button-active" : ""
+        }`}
       >
         All
       </button>
@@ -31,7 +33,7 @@ function TodoFilters() {
           todosFiltered();
         }}
         className={`button filter-button ${
-          filter === "completed" ? "filter-button-completed" : ""
+          filter === "completed" ? "filter-button-active" : ""
         }`}
       >
         Completed
