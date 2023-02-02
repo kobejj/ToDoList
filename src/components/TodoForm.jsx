@@ -5,6 +5,7 @@ function TodoForm() {
   const { todos, setTodos, idForTodo, setIdForTodo } = useContext(TodosContext);
   //console.log(props);
   const [todoInput, setTodoInput] = useState("");
+  console.log("hi");
 
   function handleInput(event) {
     setTodoInput(event.target.value);
